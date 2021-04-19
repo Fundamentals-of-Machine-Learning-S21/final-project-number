@@ -108,6 +108,26 @@ def PrePro_PCA(X_PCA):
     
     return n_components, pca, X_PCA
 
+def PrePro_LDA(X, y):
+    LDA_var = []
+    for i in range(10):
+        n_components = i
+        lda_numbers = LDA(n_components=n_components)
+        lda_numbers.fit(X, y)
+        total_var = lda_numbers.explained_variance_ratio_.sum() * 100
+        LDA_var.append(total_var)
+    LDA_var = np.array(LDA_var)
+
+    #print(np.where(LDA_var>=90))
+    print('minimum number of principal components you need to preserve in order to explain at least 90% of the data is: ',
+          np.amin(np.where(LDA_var>=90)))
+
+    n_components = np.amin(np.where(LDA_var>=90))
+    # n_components = 9
+    lda = LDA(n_components=n_components)
+    X_LDA = lda.fit_transform(X, y)
+    return lda, X_LDA
+
 # k-NN classifier
 def k_NN(X_train, y_train, X_test, y_test, function):
     # k-NN classifier
@@ -140,9 +160,16 @@ Preprocessed_data = np.reshape(Preprocessed_data, (3360, -1))
 print('pre-processed data shape', Preprocessed_data.shape)
 print(labels.shape)
 
+#no PCA or LDA
+np.save('data_preprocessed', Preprocessed_data)
+
 #run PCA, retaining 90%
 n_components, pca, X_PCA = PrePro_PCA(Preprocessed_data)
-np.save('data_preprocessed_noPCA', Preprocessed_data)
+np.save('data_preprocessed_PCA', X_PCA)
+
+#run LDA, retaining 90%
+lda, X_LDA = PrePro_LDA(Preprocessed_data, labels)
+np.save('data_preprocessed_LDA', X_LDA)
 
 
 
