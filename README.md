@@ -214,12 +214,13 @@ def test_model():
     score = model.evaluate(X_testing, y_testing, verbose=0)
     print('Test loss:', '%.3f' % (score[0]*100),'%')
     print('Test accuracy:', '%.3f' % (score[1]*100),'%')
-    
     Y_pred = model.predict(X_testing)
     Y_pred_classes = np.argmax(Y_pred,axis = 1) 
     Y_true = np.argmax(y_testing,axis = 1) 
     confusion_mtx = confusion_matrix(Y_true, Y_pred_classes) 
     plot_confusion_matrix(confusion_mtx, classes = range(10)) 
+    labels_predicted = Y_pred
+    np.save('labels_predicted', labels_predicted) 
 ```
 
 #### 5.1. Input Testing Data and Associated Labels <a name="subsection51"></a>  
@@ -254,11 +255,12 @@ correctly versus incorrectly classified digits (1.00 being perfect accurate, 0.0
 
 #### 5.3. Outputs: Confusion Matrix <a name="subsection53"></a>  
 TEST.py generates a confusion matrix to accompany the accuracy values provided. This figure shows the true labels of each sample versus their labels, as predicted by
-the model. The diagonal of this matrix represents the correct label assignment, while any values other than '0' in non-daigonal cells identifies not only which digits
+the model. The diagonal of this matrix represents the correct label assignment, while any values other than '0' in non-diagonal cells identifies not only which digits
 were mis-labeled, but what they were incorrectly labeled as. 
 
 #### 5.4. Outputs: Predicted Labels <a name="subsection54"></a>  
-The final output of TEST.py is the list of predicted labels for the test set of data. 
+The final output of TEST.py is the list of predicted labels for the test set of data. This list is in the form of a vector, with the class label associated with each
+input digit. This vector is assigned the name 'labels_predicted', and is automatically saved to the user's directory. 
 
 
 ### 6. Hyperparameters <a name="section6"></a>
@@ -306,9 +308,9 @@ cNN_NN_layer2 = 300
 ```  
 
 ### 7. Fixes to Common Errors <a name="subsection7"></a>
-shape of input data
-number of preprocessing methods used
-Keras issues due to dimensionality changes
+shape of input data  
+number of preprocessing methods used  
+Keras issues due to dimensionality changes  
 
 
 
