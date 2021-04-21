@@ -296,13 +296,13 @@ will be run, though the program will stop early at convergence if necessary
 - cNN_NN_layer2: The number of neurons in the second hidden layer of the neural network
 
 ```py
-# c-NN Hyperparameters
+c-NN Hyperparameters
 num_classes = 10
-img_rows, img_cols = dimensions, dimensions
-batch_size = 200
-epochs = 400
-cNN_NN_layer1 = 1500
-cNN_NN_layer2 = 1000
+batch_size = 300
+epochs = 500
+cNN_NN_layer1 = 300
+cNN_NN_layer2 = 300
+
 ```  
 
 ### 7. Fixes to Common Errors <a name="subsection7"></a>
