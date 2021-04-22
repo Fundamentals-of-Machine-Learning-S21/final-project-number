@@ -27,6 +27,7 @@ Note - this file is Markdown. To best view this README, view in a Markdown viewe
 	6.1. [Preprocessing Parameters](#subsection61)  
 	6.2. [Convolutional Neural Network (CNN) Parameters](#subsection62) 
 7. [Common Errors (and their solutions!)](#section7)
+8. [References)](#section8)
  
 
 ## 1. Introduction <a name="introduction"></a>
@@ -352,7 +353,17 @@ def resized(input_data, dimensions):
 Should you alter the size of the images used as the input to the CNN (i.e. they are no longer 20x20 or 400 dimensions), Keras may fail during model training.
 Unfortunately, there is no 'quick' fix to this; the sizes of each filter used and each kernal used must be altered to compensate for the larger (or smaller) input. 
 
+### 8. References Used <a name="subsection8"></a>
+While this code was written by the author for the EEL5840 Spring 2021 Handwritten Digits Dataset, it would not have been possible without the help and 
+guidance of several individuals who published their tutorials. The following references were used through the development and optimization of this code:
 
+Brownlee, J. (2020, August 24). How to develop a CNN for mnist handwritten Digit Classification. https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-from-scratch-for-mnist-handwritten-digit-classification/
+
+Dwivedi, A. (2019, April 11). Handwritten digit recognition with CNN. https://datascienceplus.com/handwritten-digit-recognition-with-cnn/
+
+Mahapatra, S. (2018, May 22). A simple 2D CNN for MNIST digit recognition. https://towardsdatascience.com/a-simple-2d-cnn-for-mnist-digit-recognition-a998dbc1e79a
+
+Yassineghouzam. (2017, August 18). Introduction to CNN Keras. https://www.kaggle.com/yassineghouzam/introduction-to-cnn-keras-0-997-top-6
 
 
 
