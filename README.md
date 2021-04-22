@@ -315,7 +315,7 @@ cNN_NN_layer2 = 750
 
 ```  
 
-### 7. Fixes to Common Errors <a name="subsection7"></a>
+### 7. Fixes to Common Errors <a name="section7"></a>
 ___
 #### 7.1. ValueError: cannot reshape array of size ____ into shape (300,300)  
 If the input data is not properly shapped (i.e. differes, from the shape (number of dimensions, number of samples), as described [here](#subsection41), you'll get an error saying:  
@@ -353,7 +353,7 @@ def resized(input_data, dimensions):
 Should you alter the size of the images used as the input to the CNN (i.e. they are no longer 20x20 or 400 dimensions), Keras may fail during model training.
 Unfortunately, there is no 'quick' fix to this; the sizes of each filter used and each kernal used must be altered to compensate for the larger (or smaller) input. 
 
-### 8. References Used <a name="subsection8"></a>
+### 8. References Used <a name="section8"></a>
 While this code was written by the author for the EEL5840 Spring 2021 Handwritten Digits Dataset, it would not have been possible without the help and 
 guidance of several individuals who published their tutorials. The following references were used through the development and optimization of this code:
 
