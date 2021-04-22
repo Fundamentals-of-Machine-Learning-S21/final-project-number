@@ -309,15 +309,49 @@ will be run, though the program will stop early at convergence if necessary
 num_classes = 10
 batch_size = 300
 epochs = 500
-cNN_NN_layer1 = 300
-cNN_NN_layer2 = 300
+cNN_NN_layer1 = 750
+cNN_NN_layer2 = 750
 
 ```  
 
 ### 7. Fixes to Common Errors <a name="subsection7"></a>
-shape of input data
-number of preprocessing methods used
-Keras issues due to dimensionality changes
+___
+#### 7.1. ValueError: cannot reshape array of size ____ into shape (300,300)  
+If the input data is not properly shapped (i.e. differes, from the shape (number of dimensions, number of samples), as described [here](#subsection41), you'll get an error saying:  
+"ValueError: cannot reshape array of size ____ into shape (300,300)"
+The fix to this is as described in Section 4.1. If there is a ```.T``` in your ```Training_data``` definition line, remove it. If there is no such ```.T```, add one. This will resolve this error
+
+If this does not solve the error, the alternate cause is likely that the preprocessing workflow has been altered.
+
+Should you add (or subtract) preprocessing methods to the preprocessing workflow, you may encounter this error. This is due to the fact that each of Open.cv's transformations changes
+the shape of the input data. Fortunately, there is a fix for this built in to the workflow. In the ```def resized()``` function, simply comment out (add a #) to the 
+```img = input_data1[:,i]``` line, and remove the # from the ```img = input_data2[:,i]``` line (as shown below)
+```py
+def resized(input_data, dimensions):
+    Data_train_resized = []
+    input_data2 = np.array(input_data)
+    input_data1 = input_data2.T[0]
+    for i in range(len(data_train[1])):
+        img = input_data1[:,i]
+        # img = input_data2[:,i]
+        img = img.reshape(300,300)
+```
+```py
+def resized(input_data, dimensions):
+    Data_train_resized = []
+    input_data2 = np.array(input_data)
+    input_data1 = input_data2.T[0]
+    for i in range(len(data_train[1])):
+        img = input_data1[:,i]
+        img = input_data2[:,i]
+        # img = img.reshape(300,300)
+```
+
+
+#### 7.2. Keras issues due to dimensionality changes  
+Should you alter the size of the images used as the input to the CNN (i.e. they are no longer 20x20 or 400 dimensions), Keras may fail during model training.
+Unfortunately, there is no 'quick' fix to this; the sizes of each filter used and each kernal used must be altered to compensate for the larger (or smaller) input. 
+
 
 
 
