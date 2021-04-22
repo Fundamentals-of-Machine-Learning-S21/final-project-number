@@ -35,7 +35,7 @@ ___
 This number classifier is designed to train on an input dataset made up of handwritten digits (0-9) and their associated labels 
 (the training data), and then accurately classify additional handwritten digits (the testing data). Ideally, the dataset in question 
 contains several thousand of these handwritten digits, with an equal distribution of each individual digit. This is similar in nature 
-to the [MNIST](https://keras.io/api/datasets/mnist/) data and associated classifiers, with a few distinct differences. This program has been developed to
+to the [MNIST](https://keras.io/api/datasets/mnist/) public dataset and associated classifiers, with a few distinct differences. This program has been developed to
 classify digits that are not as neatly written with much more background noise and distortions than the clear examples that can be found 
 in MNIST. Additionally, this program's inputs require a higher resolution image input (300x300), which is closer to what one can expect from 
 modern photographs of handwriting. However, much of the workflow is similar to MNIST solutions and other number classifiers, as this is a
@@ -79,7 +79,7 @@ labels_train.npy - Corresponding training data labels
 data_test.npy - Testing data (remaining 30-20% of your dataset)
 labels_test.npy - Corresponding testing data labels
 ```
-If your images are not in a numpy array format, that's ok! There's a script (provided by Dr Catia Silva) that can convert 
+If your images are not in a numpy array format, that's ok! There's a script (provided by Dr. Catia Silva) that can convert 
 your image files in to a usable format. First give a number from 1 to 4 to each team member (this is the ID). Then, for
 example, when team member with ID 4 is recording hers/his 5th handwriting of digit 8, the file name should read "4-5-8.jpg".
 Then, run the folder containing the numbers through the following script
@@ -182,8 +182,8 @@ highlights the lines that make up each digit.
 The output of these three functions is a new dataset called 'data_preprocessed.npy', which will appear in your directory once the preprocessing has successfully completed. 
 
 #### 4.3. CNN Workflow <a name="subsection43"></a>  
-Following the preprocessing, the training data undergoes a random data augmentation and is fed through a 7 layer convolutional neural network. The data augmentation 
-(which is done through Keras' [ImageDataProcessing](https://keras.io/api/preprocessing/image/))  randomly adjusts each image in the dataset in rotation, zoom, and vertical/horizontal shift 
+Following the preprocessing, the training data undergoes a random data augmentation and is fed through a 7 layer convolutional neural network (CNN). The data augmentation 
+(which is done through Keras' [ImageDataProcessing](https://keras.io/api/preprocessing/image/)) randomly adjusts each image in the dataset in rotation, zoom, and vertical/horizontal shift 
 (as shown below). These shifts are adjustable, and can be manipulated at minimal risk to the algorithm's functionality (though any changes may impact the accuracy of 
 the model). 
 Data augmentation:
@@ -210,7 +210,7 @@ report the time (in seconds) that it took to train your data.
 
 ### 5. Step 2: Running Testing Data and Evaluating Algorithm <a name="section5"></a>
 ___
-Once the model has been trained at you have 'Number$_CNN_Model.h5' in your directory (and _only_ once you have 'Number$_CNN_Model.h5' in your directory), you're ready
+Once the model has been trained and you have 'Number$_CNN_Model.h5' in your directory (and _only_ once you have 'Number$_CNN_Model.h5' in your directory), you're ready
 to test the model! This process uses the trained model generated in TRAIN.py and assesses its ability to classify the [remainder of your dataset](#subsection22).
 
 ```py
@@ -242,7 +242,7 @@ print(labels.shape)
 ```
 
 Like TRAIN.py, the ```'data_test.npy'``` represents the file name of your testing data, as named in your [directory](#subsection22). This should contain 
-30-20% of all the pictures of digits you have collected in 300x300px resolution. Enter the name of your testing data _exactly as it appears in your directory_, 
+20-30% of all the pictures of digits you have collected in 300x300px resolution. Enter the name of your testing data _exactly as it appears in your directory_, 
 with the .npy file extension.
 
 Also (just like TRAIN.py), this model has been developed to process testing data that is in the shape (number of dimensions, number of samples). If you had to flip
