@@ -320,7 +320,15 @@ ___
 #### 7.1. ValueError: cannot reshape array of size ____ into shape (300,300)  
 If the input data is not properly shapped (i.e. differes, from the shape (number of dimensions, number of samples), as described [here](#subsection41), you'll get an error saying:  
 "ValueError: cannot reshape array of size ____ into shape (300,300)"
-The fix to this is as described in Section 4.1. If there is a ```.T``` in your ```Training_data``` definition line, remove it. If there is no such ```.T```, add one. This will resolve this error
+The fix to this is as described in Section 4.1. If there is a ```.T``` in your ```Training_data``` definition line, remove it. If there is no such ```.T```, add one. This will resolve this error (as seen below)
+```py
+# assign variable to input data
+Training_Data = data_train
+```
+```py
+# assign variable to input data
+Training_Data = data_train.T
+```
 
 If this does not solve the error, the alternate cause is likely that the preprocessing workflow has been altered.
 
