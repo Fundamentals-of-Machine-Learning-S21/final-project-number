@@ -146,23 +146,23 @@ The first time you, the user, will input text in to the code will be when you as
 ```py
 # Input training data and labels here
 
-data_train = np.load('TRAIN_data_train.npy')
+data_train = np.load('data_train.npy')
 print('raw data shape', data_train.shape)
 labels = np.load('TRAIN_labels_train.npy')
 print(labels.shape)
 ```
-The ```'TRAIN_data_train.npy'``` represents the file name of your training data, as named in your [directory](#subsection22). This should contain 70-80% of
+The ```'data_train.npy'``` represents the file name of your training data, as named in your [directory](#subsection22). This should contain 70-80% of
 all the pictures of digits you have collected in 300x300px resolution (If this is not the case, click [here](#subsection22) to see how to set up your data). Go ahead 
 and enter the name of your training data _exactly as it appears in your directory_, with the .npy file extension.
 
 This model has been developed to process training data that is in the shape (number of dimensions, number of samples). If you are unsure of the shape of your data,
 use the ```_.shape``` command to assess what you're working with. If your data has its rows/columns flipped, simply change the 
 ```py
-data_train = np.load('TRAIN_data_train.npy')
+data_train = np.load('data_train.npy')
 ``` 
 to
 ```py
-data_train.T = np.load('TRAIN_data_train.npy')
+data_train.T = np.load('data_train.npy')
 ```
 Once your training data is in the proper orientation, you are ready to run the TRAIN.py program!
 
@@ -171,12 +171,16 @@ Once your training data is in the proper orientation, you are ready to run the T
 After importing the data, TRAIN.py preprocesses it to better enable the classification process. This consists of three steps (morphological transformations),
 'Thinning', 'Resizing', and 'Outlining' (you can read more about the specifics of each of these functions [here](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html)).
 
-These three transformations are sequential, meaning that they have been programmed and their [hyperparameters](#subsection61) optimized with their specific order in mind. First, the Thinning function (cv2's erode tool) removes background noise from each image, and is immediately followed by each individual image being resized from 300x300px to 20x20px. Finally, each resized image is run through the Outline function, which, by applying a morphological gradient, both limits the remaining background noise and highlights the lines that make up each digit. 
+These three transformations are sequential, meaning that they have been programmed and their [hyperparameters](#subsection61) optimized with their specific order in mind. 
+First, the Thinning function (cv2's erode tool) removes background noise from each image, and is immediately followed by each individual image being resized from 300x300px 
+to 20x20px. Finally, each resized image is run through the Outline function, which, by applying a morphological gradient, both limits the remaining background noise and 
+highlights the lines that make up each digit. 
 
 The output of these three functions is a new dataset called 'data_preprocessed.npy', which will appear in your directory once the preprocessing has successfully completed. 
 
 #### 4.3. CNN Workflow <a name="subsection43"></a>  
-Following the preprocessing, the training data undergoes a random data augmentation and is fed through a 7 layer convolutional neural network. The data augmentation (which is done through Keras' [ImageDataProcessing](https://keras.io/api/preprocessing/image/)) randomly adjusts each image in the dataset in rotation, zoom, and vertical/horizontal shift 
+Following the preprocessing, the training data undergoes a random data augmentation and is fed through a 7 layer convolutional neural network. The data augmentation 
+(which is done through Keras' [ImageDataProcessing](https://keras.io/api/preprocessing/image/))  randomly adjusts each image in the dataset in rotation, zoom, and vertical/horizontal shift 
 (as shown below). These shifts are adjustable, and can be manipulated at minimal risk to the algorithm's functionality (though any changes may impact the accuracy of 
 the model). 
 Data augmentation:
@@ -212,37 +216,40 @@ def test_model():
     X_testing, y_testing = scale_testingData(X_testing, y_testing)
     model = load_model('Number$_CNN_Model.h5')
     score = model.evaluate(X_testing, y_testing, verbose=0)
-    print('Test loss:', '%.3f' % (score[0]*100),'%')
+    print('Test loss:', '%.3f' % (score[0]))
     print('Test accuracy:', '%.3f' % (score[1]*100),'%')
     Y_pred = model.predict(X_testing)
     Y_pred_classes = np.argmax(Y_pred,axis = 1) 
     Y_true = np.argmax(y_testing,axis = 1) 
     confusion_mtx = confusion_matrix(Y_true, Y_pred_classes) 
     plot_confusion_matrix(confusion_mtx, classes = range(10)) 
-    labels_predicted = Y_pred
-    np.save('labels_predicted', labels_predicted) 
+    labels_predicted = Y_pred_classes
+    np.save('labels_predicted', labels_predicted)
+    return labels_predicted, score
+    
+labels_predicted, score = test_model()
 ```
 
 #### 5.1. Input Testing Data and Associated Labels <a name="subsection51"></a>  
 ```py
-data_test = np.load('TEST_data_test.npy')
+data_test = np.load('data_test.npy')
 print('raw data shape', data_test.shape)
-labels = np.load('TEST_labels_test.npy')
+labels = np.load('labels_test.npy')
 print(labels.shape)
 ```
 
-Like TRAIN.py, the ```'TEST_data_test.npy'``` represents the file name of your testing data, as named in your [directory](#subsection22). This should contain 
+Like TRAIN.py, the ```'data_test.npy'``` represents the file name of your testing data, as named in your [directory](#subsection22). This should contain 
 30-20% of all the pictures of digits you have collected in 300x300px resolution. Enter the name of your testing data _exactly as it appears in your directory_, 
 with the .npy file extension.
 
 Also (just like TRAIN.py), this model has been developed to process testing data that is in the shape (number of dimensions, number of samples). If you had to flip
 the data in the TRAIN.py function, you'll have to do the exact same thing here
 ```py
-data_test = np.load('TEST_data_test.npy')
+data_test = np.load('data_test.npy')
 ``` 
 to
 ```py
-data_test.T = np.load('TEST_data_test.npy')
+data_test.T = np.load('data_test.npy')
 ```
 
 Unlike TRAIN.py, however, this program does NOT train the algorithm. Instead, it imports the model generated [here](#subsection44) and evaluates it using the images
@@ -298,7 +305,7 @@ will be run, though the program will stop early at convergence if necessary
 - cNN_NN_layer2: The number of neurons in the second hidden layer of the neural network
 
 ```py
-c-NN Hyperparameters
+# c-NN Hyperparameters
 num_classes = 10
 batch_size = 300
 epochs = 500
@@ -308,9 +315,9 @@ cNN_NN_layer2 = 300
 ```  
 
 ### 7. Fixes to Common Errors <a name="subsection7"></a>
-shape of input data  
-number of preprocessing methods used  
-Keras issues due to dimensionality changes  
+shape of input data
+number of preprocessing methods used
+Keras issues due to dimensionality changes
 
 
 
