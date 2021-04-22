@@ -27,7 +27,7 @@ Note - this file is Markdown. To best view this README, view in a Markdown viewe
 	6.1. [Preprocessing Parameters](#subsection61)  
 	6.2. [Convolutional Neural Network (CNN) Parameters](#subsection62) 
 7. [Common Errors (and their solutions!)](#section7)
-8. [References)](#section8)
+8. [References](#section8)
  
 
 ## 1. Introduction <a name="introduction"></a>
