@@ -32,25 +32,25 @@ from keras.models import load_model
 start = time.time()
 # Input training data and labels here
 
-data_train = np.load('data_train.npy')
+data_train = np.load('data_train.npy')  # training data input (should be 70-80% of the total data)
 print('raw data shape', data_train.shape)
-labels = np.load('labels_train.npy')
-print(labels.shape)
+labels = np.load('labels_train.npy')    # input for labels associated with training data
+print(labels.shape) 
 
 # Preprocessing Dimensions
 
-thin_kernel = 60
-dimensions = 20
-outline_kernel = 4
+thin_kernel = 60        # size of the kernel used by the cv2.erode function
+dimensions = 20         # new number of pixels (height, width) that the input data will be resized to
+outline_kernel = 4      # the size of the kernel used for the application of a morphological gradient
 
 # c-NN Hyperparameters
 
-num_classes = 10
+num_classes = 10        # Final 10 neurons in CNN, each represents a label 0-9
 img_rows, img_cols = dimensions, dimensions
-batch_size = 300
-epochs = 750
-cNN_NN_layer1 = 750
-cNN_NN_layer2 = 750
+batch_size = 300        # number of samples processed before the model is updated
+epochs = 750            # number of complete passes through the training datase
+cNN_NN_layer1 = 750     # number of neurons in first hidden layer in neural network
+cNN_NN_layer2 = 750     # number of neurons in second hidden layer in neural network
 
 
 
@@ -116,7 +116,7 @@ Preprocessed_data = preprocess_Data(Training_Data, dimensions, thin_kernel, outl
 
 print('pre-processed data shape', Preprocessed_data.shape)
 print(labels.shape)
-np.save('data_preprocessed', Preprocessed_data)
+np.save('train_data_preprocessed', Preprocessed_data)
 
 # Train the CNN
 

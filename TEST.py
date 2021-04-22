@@ -33,25 +33,26 @@ start = time.time()
 
 # Input training data and labels here
 
-data_test = np.load('data_test.npy')
+data_test = np.load('data_test.npy')   # testing data input (should be remaining 30-20% of the total data)
 print('raw data shape', data_test.shape)
-labels = np.load('labels_test.npy')
+labels = np.load('labels_test.npy')    # input for labels associated with testing data
 print(labels.shape)
 
 # Preprocessing Dimensions
 
-thin_kernel = 60
-dimensions = 20
-outline_kernel = 4
+thin_kernel = 60        # size of the kernel used by the cv2.erode function
+dimensions = 20         # new number of pixels (height, width) that the input data will be resized to
+outline_kernel = 4      # the size of the kernel used for the application of a morphological gradient
 
 # c-NN Hyperparameters
 
-num_classes = 10
+num_classes = 10        # Final 10 neurons in CNN, each represents a label 0-9
 img_rows, img_cols = dimensions, dimensions
-batch_size = 300
-epochs = 750
-cNN_NN_layer1 = 750
-cNN_NN_layer2 = 750
+batch_size = 300        # number of samples processed before the model is updated
+epochs = 750            # number of complete passes through the training datase
+cNN_NN_layer1 = 750     # number of neurons in first hidden layer in neural network
+cNN_NN_layer2 = 750     # number of neurons in second hidden layer in neural network
+
 
 
 # Outlines
@@ -119,7 +120,7 @@ Preprocessed_data = preprocess_Data(Testing_Data, dimensions, thin_kernel, outli
 
 print('pre-processed data shape', Preprocessed_data.shape)
 print(labels.shape)
-np.save('data_preprocessed', Preprocessed_data)
+np.save('test_data_preprocessed', Preprocessed_data)
 
 # Load and scale testing data (DOES NOT TRAIN TESTING DATA)
 
