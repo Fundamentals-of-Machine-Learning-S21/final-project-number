@@ -65,6 +65,8 @@ itertools                       conda install -c anaconda more-itertools
 keras                           conda install -c conda-forge keras
 time                            conda install -c conda-forge time
 ```
+The full list of libraries and functions is listed at the top of both TRAIN.py and TEST.py. If the aforementioned libraries are installed, the code will function. 
+
 ### 2.2. Directory Set-Up <a name="subsection22"></a>
 In addition to the listed libraries, Number$ Classifier also requires certain contents in its directory to run properly. If
 You do not know how to set your directory, there are a lot of [great resources](https://linuxize.com/post/python-get-change-current-working-directory/) around the internet that can help you get more familiar 
