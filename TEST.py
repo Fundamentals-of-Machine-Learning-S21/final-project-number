@@ -124,7 +124,7 @@ np.save('test_data_preprocessed', Preprocessed_data)
 
 # pull in testing data
 def load_testingData():
-    data_preprocesssed = np.load('data_preprocessed.npy')
+    data_preprocesssed = Preprocessed_data
     X_testing = data_preprocesssed # (3360, 400)
     y_testing = labels # (3360,)
     return X_testing, y_testing

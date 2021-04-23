@@ -118,13 +118,13 @@ Preprocessed_data = preprocess_Data(Training_Data, dimensions, thin_kernel, outl
 
 print('pre-processed data shape', Preprocessed_data.shape)
 print(labels.shape)
-np.save('train_data_preprocessed', Preprocessed_data)
+np.save('data_preprocessed', Preprocessed_data)
 
 # Train the CNN
 
 # pull in training data
 def load_trainingData():
-    data_preprocesssed = np.load('data_preprocessed.npy')
+    data_preprocesssed = Preprocessed_data
     X_training = data_preprocesssed # (3360, 400)
     y_training = labels # (3360,)
     return X_training, y_training
