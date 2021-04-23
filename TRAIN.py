@@ -37,11 +37,11 @@ print('raw data shape', data_train.shape)
 labels = np.load('labels_train.npy')    # input for labels associated with training data
 print(labels.shape) 
 
-# Preprocessing Dimensions
+# Preprocessing Parameters
 
-thin_kernel = 60        # size of the kernel used by the cv2.erode function
+thin_kernel = 1        # size of the kernel used by the cv2.erode function
 dimensions = 20         # new number of pixels (height, width) that the input data will be resized to
-outline_kernel = 4      # the size of the kernel used for the application of a morphological gradient
+outline_kernel = 60      # the size of the kernel used for the application of a morphological gradient
 
 # c-NN Hyperparameters
 
@@ -53,18 +53,18 @@ cNN_NN_layer1 = 750     # number of neurons in first hidden layer in neural netw
 cNN_NN_layer2 = 750     # number of neurons in second hidden layer in neural network
 
 
-
-
-
+start = time.time()
 # Thinning
 def thinned(input_data, thin_kernel):
     data_eroded = []
     for i in range(len(input_data[1])):
         img = input_data[:,i]
+        # img = img.reshape(300,300)
         kernel_value = thin_kernel
         kernel = np.ones((kernel_value,kernel_value),np.uint8)
         eroded_img = cv2.erode(img,kernel,iterations = 1)
         data_eroded.append(eroded_img)
+
     data_eroded = np.array(data_eroded)
     print('Thinning kernel value set to: '+ str(thin_kernel))
     return data_eroded
@@ -96,16 +96,18 @@ def outline(input_data, outline_kernel):
         kernel = np.ones((outline_kernel,outline_kernel),np.uint8)
         outlines_img = cv2.morphologyEx(img,cv2.MORPH_GRADIENT,kernel)
         data_outlines.append(outlines_img)
+    # np.save('data_outlines', data_outlines)
     data_outlines = np.array(data_outlines)
     
     print('Outline kernel value set to: '+ str(outline_kernel))
+    # print('Outline image output data size: '+ str(data_outlines.shape)) 
     return data_outlines
 
 def preprocess_Data(input_data, dimensions, thin_kernel, outline_kernel):
-    Thinned = thinned(input_data, thin_kernel)     
-    Resized = resized(Thinned, dimensions)
-    Outlined = outline(Resized, outline_kernel)       
-    return Outlined
+    Outlined = outline(input_data, outline_kernel)
+    Resized = resized(Outlined, dimensions)
+    Thinned = thinned(Resized, thin_kernel)      
+    return Thinned
 
 # assign variable to input data
 Training_Data = data_train
