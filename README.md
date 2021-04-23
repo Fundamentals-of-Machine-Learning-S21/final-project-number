@@ -317,7 +317,7 @@ will be run, though the program will stop early at convergence if necessary
 # c-NN Hyperparameters
 num_classes = 10
 batch_size = 300
-epochs = 500
+epochs = 750
 cNN_NN_layer1 = 750
 cNN_NN_layer2 = 750
 
