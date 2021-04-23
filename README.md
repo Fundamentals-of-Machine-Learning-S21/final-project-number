@@ -175,9 +175,16 @@ After importing the data, TRAIN.py preprocesses it to better enable the classifi
 'Thinning', 'Resizing', and 'Outlining' (you can read more about the specifics of each of these functions [here](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html)).
 
 These three transformations are sequential, meaning that they have been programmed and their [hyperparameters](#subsection61) optimized with their specific order in mind. 
-First, the Thinning function (cv2's erode tool) removes background noise from each image, and is immediately followed by each individual image being resized from 300x300px 
-to 20x20px. Finally, each resized image is run through the Outline function, which, by applying a morphological gradient, both limits the remaining background noise and 
-highlights the lines that make up each digit. 
+First, the the Outline function, which, by applying a morphological gradient, both limits the remaining background noise and 
+highlights the lines that make up each digit, and is immediately followed by each individual image being resized from 300x300px 
+to 20x20px. Finally, each resized image is run through the Thinning function (cv2's erode tool) removes background noise from each image 
+```py
+def preprocess_Data(input_data, dimensions, thin_kernel, outline_kernel):
+    Outlined = outline(input_data, outline_kernel)
+    Resized = resized(Outlined, dimensions)
+    Thinned = thinned(Resized, thin_kernel)      
+    return Thinned
+```
 
 The output of these three functions is a new dataset called 'data_preprocessed.npy', which will appear in your directory once the preprocessing has successfully completed. 
 
@@ -278,19 +285,18 @@ ___
 #### 6.1 Preprocessing Parameters <a name="subsection61"></a>
 There are three preprocessing hyperparameters that have been tuned for this model, "thin_kernel", "dimensions", and "outline_kernel". Each one 
 of these parameters corresponds to one of the three components to the data preprocessing workflow. 
- - thin_kernel: (optimized at 60) dictates the size of the kernel used by the cv2.erode function. A kernel size of 60x60 is used here.
+ - outline_kernel: optimized at 60) similar to the thin_kernel, dictates the size of the kernel used for the application of a morphological 
+gradient. A kernel size of 60x60 is used here.
  - dimensions: (optimized at 20) dictates the new number of pixels that the input data will be resized to. A size of 20x20 pixels is used here.
- - outline_kernel: optimized at 4) similar to the thin_kernel, dictates the size of the kernel used for the application of a morphological 
-gradient. A kernel size of 4x4 is used here.
-
+ - thin_kernel: (optimized at 1) dictates the size of the kernel used by the cv2.erode function. A kernel size of 1x1 is used here.
 
 NOTE: Changing the 'dimensions' parameter will impact the CNN's parameters as well. Avoid doing so at the risk of compromising the convolutional layers!
 ```py
 # Preprocessing Dimensions
 
-thin_kernel = 60
+outline_kernel = 60
 dimensions = 20
-outline_kernel = 4
+thin_kernel = 1
 ```
 
 for more information on these hyperparamters and their use in the preprocessing workflow, visit the [OpenCV Morphological Transformations page](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html)
