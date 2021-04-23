@@ -27,7 +27,8 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import Normalizer
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
-
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import RepeatedStratifiedKFold
 
 # data_preprocesssed = np.load('data_preprocessed.npy')
 # data_preprocesssed = np.load('data_preprocessed_LDA.npy', allow_pickle=True)
@@ -39,11 +40,21 @@ print(labels.shape)
 X = data_preprocesssed
 y = labels
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.7, random_state=42)
 
-net = MLPClassifier(hidden_layer_sizes=(1000, 1000), max_iter=10000, alpha=0.13,
+net = MLPClassifier(hidden_layer_sizes=(300, 300), max_iter=10000, alpha=0.13,
                     solver='sgd', random_state=42, learning_rate = 'adaptive',
                     learning_rate_init=.08)
+
+model = net
+# define model evaluation method
+cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=1)
+# evaluate model
+scores = cross_val_score(model, X_train, y_train, scoring='accuracy', cv=cv)
+# summarize result
+print('scores', scores)
+print('mean scores', np.mean(scores)) 
+print('std dev of scores', np.std(scores))
 
 net.fit(X_train, y_train)
 
