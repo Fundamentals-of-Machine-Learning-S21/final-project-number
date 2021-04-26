@@ -33,10 +33,16 @@ start = time.time()
 
 # Input training data and labels here
 
-data_test = np.load('data_test.npy')   # testing data input (should be remaining 30-20% of the total data)
+data_test = np.load('data_train.npy')   # testing data input (should be remaining 30-20% of the total data)
 print('raw data shape', data_test.shape)
-labels = np.load('labels_test.npy')    # input for labels associated with testing data
+labels = np.load('labels_train.npy')    # input for labels associated with testing data
 print(labels.shape)
+
+
+# data_test = np.load('TEST_data_test.npy')   # testing data input (should be remaining 30-20% of the total data)
+# print('raw data shape', data_test.shape)
+# labels = np.load('TEST_labels_test.npy')    # input for labels associated with testing data
+# print(labels.shape)
 
 # Preprocessing Parameters
 
